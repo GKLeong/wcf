@@ -9,3 +9,7 @@ spring:
 
     # SQL 脚本的目录,多个路径使用逗号分隔
     locations: classpath:db/migration
+
+mybatis:
+  mapper-locations:
+    - classpath:db/mapper/*.xml
