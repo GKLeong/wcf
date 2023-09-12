@@ -9,7 +9,9 @@ spring:
 
     # SQL 脚本的目录,多个路径使用逗号分隔
     locations: classpath:db/migration
-
+jwt:
+  secret: "44d6e7c6-488d-4a5a-b5f2-86a0bcd8908d"
+  expiresMs: 86400000
 mybatis:
   mapper-locations:
     - classpath:db/mapper/*.xml
