@@ -1,7 +1,9 @@
 package com.wcf.server.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -18,9 +20,7 @@ public class Role {
         ROLE_USER
     }
 
-    public Role() {
-
-    }
+    public Role() {}
 
     public Role(ERole name) {
         this.name = name;
