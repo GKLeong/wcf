@@ -1,18 +1,22 @@
 package com.wcf.server.model;
 
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@Entity
 @Table(name = "user_roles")
 public class UserRole {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "user_id")
     private Long userId;
+    @Column(name = "role_id")
     private Integer roleId;
+    @Column(name = "role_name")
     private Role.ERole roleName;
 
-    public UserRole(Long userId, Integer roleId, Role.ERole roleName) {
-        this.userId = userId;
-        this.roleId = roleId;
-        this.roleName = roleName;
+    public UserRole() {
     }
 }

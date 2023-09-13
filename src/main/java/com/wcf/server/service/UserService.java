@@ -62,7 +62,10 @@ public class UserService {
 
     public void addRole(Long userId, Integer roleId) {
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new UsernameNotFoundException("角色不存在: " + roleId));
-        UserRole userRole = new UserRole(userId, role.getId(), role.getName());
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        userRole.setRoleId(role.getId());
+        userRole.setRoleName(role.getName());
         userRoleRepository.save(userRole);
     }
 }

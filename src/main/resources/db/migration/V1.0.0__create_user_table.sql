@@ -20,7 +20,7 @@ CREATE TABLE `users`
 
 CREATE TABLE `roles`
 (
-    `id`   INT(11)     NOT NULL AUTO_INCREMENT,
+    `id`   INT         NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(20) NOT NULL COMMENT '角色',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
@@ -32,9 +32,11 @@ VALUES ('ROLE_ADMIN'),
 
 CREATE TABLE `user_roles`
 (
-    `user_id`   INT(11)     NOT NULL COMMENT '用户ID',
+    `id`        INT         NOT NULL AUTO_INCREMENT,
+    `user_id`   INT         NOT NULL COMMENT '用户ID',
     `role_id`   INT(11)     NOT NULL COMMENT '角色ID',
     `role_name` VARCHAR(20) NOT NULL COMMENT '角色',
+    PRIMARY KEY (`id`) USING BTREE,
     KEY `index_user_id` (`user_id`) USING BTREE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1;
