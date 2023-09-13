@@ -1,13 +1,11 @@
 package com.wcf.server.controller;
 
-import com.wcf.server.model.User;
+import com.wcf.server.response.ResultBody;
 import com.wcf.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,12 +19,12 @@ public class UserController {
 
     @GetMapping()
 //    @PreAuthorize("hasRole('ADMIN')")
-    public List<User> findAll() {
-        return userService.findAll();
+    public ResultBody findAll() {
+        return ResultBody.success(userService.findAll());
     }
 
     @GetMapping("me")
-    public User findMe(){
-        return userService.findMe();
+    public ResultBody findMe() {
+        return ResultBody.success(userService.findMe());
     }
 }

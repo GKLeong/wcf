@@ -2,6 +2,7 @@ package com.wcf.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wcf.server.model.User;
+import com.wcf.server.response.ResultBody;
 import com.wcf.server.service.AuthService;
 import com.wcf.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,12 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public User add(@RequestBody User user) {
-        user = userService.add(user);
-        return user;
+    public ResultBody add(@RequestBody User user) {
+        return ResultBody.success(userService.add(user));
     }
 
     @PostMapping("login")
-    public HashMap<String, String> login(@RequestBody JSONObject param) {
-        return authService.getToken(param.getString("username"), param.getString("password"));
+    public ResultBody login(@RequestBody JSONObject param) {
+        return ResultBody.success(authService.getToken(param.getString("username"), param.getString("password")));
     }
 }
