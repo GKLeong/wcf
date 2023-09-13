@@ -1,4 +1,4 @@
-package com.wcf.server.jwt;
+package com.wcf.server.base.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

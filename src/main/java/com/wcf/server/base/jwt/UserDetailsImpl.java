@@ -1,4 +1,4 @@
-package com.wcf.server.jwt;
+package com.wcf.server.base.jwt;
 
 import java.util.Collection;
 import java.util.List;

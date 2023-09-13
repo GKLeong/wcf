@@ -1,8 +1,8 @@
 package com.wcf.server.service;
 
-import com.wcf.server.dao.RoleRepository;
-import com.wcf.server.dao.UserRepository;
-import com.wcf.server.dao.UserRoleRepository;
+import com.wcf.server.repository.RoleRepository;
+import com.wcf.server.repository.UserRepository;
+import com.wcf.server.repository.UserRoleRepository;
 import com.wcf.server.model.Role;
 import com.wcf.server.model.User;
 import com.wcf.server.model.UserRole;

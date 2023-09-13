@@ -1,6 +1,6 @@
-package com.wcf.server.jwt;
+package com.wcf.server.base.jwt;
 
-import com.wcf.server.dao.UserRepository;
+import com.wcf.server.repository.UserRepository;
 import com.wcf.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

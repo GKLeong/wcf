@@ -1,4 +1,4 @@
-package com.wcf.server.response;
+package com.wcf.server.base.response;
 
 import com.alibaba.fastjson.JSONObject;
 

@@ -1,6 +1,6 @@
 package com.wcf.server.controller;
 
-import com.wcf.server.response.ResultBody;
+import com.wcf.server.base.response.ResultBody;
 import com.wcf.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

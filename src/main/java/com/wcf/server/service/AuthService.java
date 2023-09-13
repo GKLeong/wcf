@@ -1,6 +1,6 @@
 package com.wcf.server.service;
 
-import com.wcf.server.jwt.JwtUtils;
+import com.wcf.server.base.jwt.JwtUtils;
 import com.wcf.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
