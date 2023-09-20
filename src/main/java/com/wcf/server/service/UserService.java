@@ -1,5 +1,6 @@
 package com.wcf.server.service;
 
+import com.wcf.server.base.response.BizException;
 import com.wcf.server.repository.RoleRepository;
 import com.wcf.server.repository.UserRepository;
 import com.wcf.server.repository.UserRoleRepository;
@@ -40,7 +41,7 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("用户名不存在: " + username));
+                .orElseThrow(() -> new BizException("用户名不存在: " + username));
     }
 
     public User findMe() {

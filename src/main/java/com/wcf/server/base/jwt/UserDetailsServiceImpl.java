@@ -1,5 +1,6 @@
 package com.wcf.server.base.jwt;
 
+import com.wcf.server.base.response.BizException;
 import com.wcf.server.repository.UserRepository;
 import com.wcf.server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("用户名不存在: " + username));
+                .orElseThrow(() -> new BizException("用户名不存在: " + username));
 
         return UserDetailsImpl.build(user);
     }
