@@ -21,18 +21,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity()
 public class WebSecurityConfig {
-    private final UserDetailsServiceImpl userDetailsService;
-
-    private final AuthEntryPointJwt unauthorizedHandler;
-
-    @Value("${spring.servlet.attachment.url}")
-    private String attachmentUrl;
+    private UserDetailsServiceImpl userDetailsService;
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
-    WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
+    private void autowired(UserDetailsServiceImpl userDetailsService, AuthEntryPointJwt unauthorizedHandler) {
         this.userDetailsService = userDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
     }
+
+    @Value("${spring.servlet.attachment.url}")
+    private String attachmentUrl;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {

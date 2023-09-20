@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserController(UserService userService) {
+    private void autowired(UserService userService) {
         this.userService = userService;
     }
 

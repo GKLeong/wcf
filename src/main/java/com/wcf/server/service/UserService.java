@@ -16,14 +16,14 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserRoleRepository userRoleRepository;
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
-    UserService(UserRepository userRepository,
-                RoleRepository roleRepository,
-                UserRoleRepository userRoleRepository
+    private void autowired(UserRepository userRepository,
+                           RoleRepository roleRepository,
+                           UserRoleRepository userRoleRepository
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;

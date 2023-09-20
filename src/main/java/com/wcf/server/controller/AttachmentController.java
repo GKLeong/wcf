@@ -13,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/attachments")
 public class AttachmentController {
-    private final AttachmentService attachmentService;
+    private AttachmentService attachmentService;
 
     @Autowired
-    private AttachmentController(AttachmentService attachmentService) {
+    private void autowired(AttachmentService attachmentService) {
         this.attachmentService = attachmentService;
     }
 

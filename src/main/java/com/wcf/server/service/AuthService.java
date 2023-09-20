@@ -13,7 +13,7 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     @Autowired
-    AuthService(UserService userService, JwtUtils jwtUtils) {
+    private AuthService(UserService userService, JwtUtils jwtUtils) {
         this.userService = userService;
         this.jwtUtils = jwtUtils;
     }

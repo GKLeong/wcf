@@ -18,11 +18,11 @@ import java.util.*;
 
 @Service
 public class AttachmentService {
-    private final UserService userService;
-    private final AttachmentRepository attachmentRepository;
+    private UserService userService;
+    private AttachmentRepository attachmentRepository;
 
     @Autowired
-    private AttachmentService(UserService userService, AttachmentRepository attachmentRepository) {
+    private void autowired(UserService userService, AttachmentRepository attachmentRepository) {
         this.userService = userService;
         this.attachmentRepository = attachmentRepository;
     }
