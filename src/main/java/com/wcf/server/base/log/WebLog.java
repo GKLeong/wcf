@@ -1,4 +1,4 @@
-package com.wcf.server.log;
+package com.wcf.server.base.log;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;

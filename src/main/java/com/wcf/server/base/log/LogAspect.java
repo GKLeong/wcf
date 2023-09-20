@@ -1,4 +1,4 @@
-package com.wcf.server.log;
+package com.wcf.server.base.log;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,7 +27,7 @@ public class LogAspect {
      * 1. @Pointcut("execution(public * com.sd.erp.controller.*.*(..))")  web层的所有方法
      * 2. @Pointcut("@annotation(com.sd.erp.log.Log)")      Log注解标注的方法
      */
-    @Pointcut("@annotation(com.wcf.server.log.Log)")
+    @Pointcut("@annotation(com.wcf.server.base.log.Log)")
     public void webLog() {
     }
 
