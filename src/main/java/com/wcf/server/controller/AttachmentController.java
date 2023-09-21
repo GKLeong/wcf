@@ -16,10 +16,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/attachments")
 public class AttachmentController {
-    private AttachmentService attachmentService;
+    private final AttachmentService attachmentService;
 
     @Autowired
-    private void autowired(AttachmentService attachmentService) {
+    public AttachmentController(AttachmentService attachmentService) {
         this.attachmentService = attachmentService;
     }
 

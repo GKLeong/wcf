@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/scrap/statistics")
 public class ScrapStatisticController {
-    private ScrapStatisticService scrapStatisticService;
+    private final ScrapStatisticService scrapStatisticService;
 
     @Autowired
-    private void autowired(ScrapStatisticService scrapStatisticService) {
+    public ScrapStatisticController(ScrapStatisticService scrapStatisticService) {
         this.scrapStatisticService = scrapStatisticService;
     }
 

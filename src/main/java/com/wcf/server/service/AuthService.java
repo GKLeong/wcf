@@ -9,11 +9,11 @@ import java.util.HashMap;
 
 @Service
 public class AuthService {
-    private UserService userService;
-    private JwtUtils jwtUtils;
+    private final UserService userService;
+    private final JwtUtils jwtUtils;
 
     @Autowired
-    private void autowired(UserService userService, JwtUtils jwtUtils) {
+    public AuthService(UserService userService, JwtUtils jwtUtils) {
         this.userService = userService;
         this.jwtUtils = jwtUtils;
     }

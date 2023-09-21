@@ -9,10 +9,10 @@ import java.util.List;
 
 @Service
 public class ScrapStatisticService {
-    private ScrapStatisticRepository scrapStatisticRepository;
+    private final ScrapStatisticRepository scrapStatisticRepository;
 
     @Autowired
-    private void autowired(ScrapStatisticRepository scrapStatisticRepository) {
+    public ScrapStatisticService(ScrapStatisticRepository scrapStatisticRepository) {
         this.scrapStatisticRepository = scrapStatisticRepository;
     }
 

@@ -3,6 +3,7 @@ package com.wcf.server.controller;
 import com.wcf.server.base.response.CommonEnum;
 import com.wcf.server.base.response.ResultBody;
 import com.wcf.server.service.ScrapService;
+import com.wcf.server.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,10 +17,10 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/scrap")
 public class ScrapController {
-    private ScrapService scrapService;
+    private final ScrapService scrapService;
 
     @Autowired
-    private void autowired(ScrapService scrapService) {
+    public ScrapController(ScrapService scrapService) {
         this.scrapService = scrapService;
     }
 
@@ -40,15 +41,7 @@ public class ScrapController {
                               @RequestParam("packageWeight") BigDecimal packageWeight,
                               @RequestParam("unitPrice") BigDecimal unitPrice
     ) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date f = dateFormat.parse(from);
-            Date e = dateFormat.parse(end);
-            scrapService.archive(f, e, packageWeight, unitPrice);
-            return ResultBody.success();
-        } catch (ParseException e) {
-            // 处理日期解析错误
-            return ResultBody.error(CommonEnum.ERROR_DATE_FORMAT);
-        }
+        scrapService.archive(DateUtils.dateFormat(from), DateUtils.dateFormat(end), packageWeight, unitPrice);
+        return ResultBody.success();
     }
 }

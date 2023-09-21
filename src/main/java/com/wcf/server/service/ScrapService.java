@@ -7,9 +7,9 @@ import com.wcf.server.model.Scrap;
 import com.wcf.server.model.ScrapStatistic;
 import com.wcf.server.repository.ScrapRepository;
 import com.wcf.server.utils.ExcelUtils;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,11 +18,11 @@ import java.util.*;
 
 @Service
 public class ScrapService {
-    private ScrapRepository scrapRepository;
-    private ScrapStatisticService scrapStatisticService;
+    private final ScrapRepository scrapRepository;
+    private final ScrapStatisticService scrapStatisticService;
 
     @Autowired
-    private void autowired(ScrapRepository scrapRepository, ScrapStatisticService scrapStatisticService) {
+    public ScrapService(ScrapRepository scrapRepository, ScrapStatisticService scrapStatisticService) {
         this.scrapRepository = scrapRepository;
         this.scrapStatisticService = scrapStatisticService;
     }
