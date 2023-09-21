@@ -1,4 +1,4 @@
-CREATE TABLE scrapy
+CREATE TABLE scrap
 (
     id             INT AUTO_INCREMENT PRIMARY KEY,
     date_recorded  DATE,

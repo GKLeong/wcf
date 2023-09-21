@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "scrap_statistics")
-public class ScrapStatistics {
+public class ScrapStatistic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

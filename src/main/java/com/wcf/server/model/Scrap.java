@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "scrapy")
-public class Scrapy {
+@Table(name = "scrap")
+public class Scrap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

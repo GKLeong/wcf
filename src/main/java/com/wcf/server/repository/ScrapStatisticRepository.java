@@ -1,9 +1,9 @@
 package com.wcf.server.repository;
 
-import com.wcf.server.model.ScrapStatistics;
+import com.wcf.server.model.ScrapStatistic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScrapStatisticsRepository extends JpaRepository<ScrapStatistics, Long> {
+public interface ScrapStatisticRepository extends JpaRepository<ScrapStatistic, Long> {
 }
