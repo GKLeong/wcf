@@ -33,6 +33,6 @@ public class Attachment {
     @Column(name = "link")
     private String link;
 
-    @Column(name = "upload_timestamp")
+    @Transient
     private Date uploadTimestamp;
 }

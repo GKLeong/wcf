@@ -44,7 +44,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
-    private Boolean deleted;
+    private Boolean deleted = false;
+    @Transient
+    private Date createTime;
+    @Transient
+    private Date updateTime;
 
     public Long getId() {
         return id;

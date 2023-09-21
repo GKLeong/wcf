@@ -8,12 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,23 +22,19 @@ public class ScrapyService {
     }
 
     public void uploadExcel(MultipartFile file) throws IOException {
-        List<HashMap<String, Object>> excelDataList = ExcelUtils.parse(file);
+        List<HashMap<String, ExcelUtils>> excelDataList = ExcelUtils.parse(file);
         List<Scrapy> dataList = new ArrayList<>();
         Scrapy data;
 
-        for (HashMap<String, Object> excelData : excelDataList) {
+        for (HashMap<String, ExcelUtils> excelData : excelDataList) {
             data = new Scrapy();
 
-            // 提取日期
-            LocalDateTime localDateTime = (LocalDateTime) excelData.get("日期");
-            ZoneId zoneId = ZoneId.systemDefault();
-            Date date = Date.from(localDateTime.atZone(zoneId).toInstant());
-
-            data.setDateRecorded(date);
-            data.setPackageNumber(((Double) excelData.get("编号")).intValue());
-            data.setWeightKg(BigDecimal.valueOf((double) excelData.get("重量")));
-            data.setTotalPackage(((Double) excelData.get("袋数")).intValue());
-            data.setComments((String) excelData.get("备注"));
+            data.setDateRecorded(excelData.get("日期").getDate());
+            data.setPackageNumber(excelData.get("编号").getInteger());
+            data.setWeightKg(excelData.get("重量").getBigDecimal());
+            Integer totalPackage = excelData.get("袋数").getInteger();
+            if (totalPackage != null) data.setTotalPackage(totalPackage);
+            data.setComments(excelData.get("备注").getString());
             dataList.add(data);
         }
 

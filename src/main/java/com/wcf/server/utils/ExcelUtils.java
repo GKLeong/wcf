@@ -8,15 +8,64 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 public class ExcelUtils {
+    private LocalDateTime date;
+    private String value;
+    private Boolean blank = false;
     private static final Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
 
-    public static List<HashMap<String, Object>> parse(MultipartFile file) throws IOException {
-        List<HashMap<String, Object>> dataList = new ArrayList<>();
+    private void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    private void setValue(String value) {
+        this.value = value;
+    }
+
+    private void setBlank(Boolean blank) {
+        this.blank = blank;
+    }
+
+    public Date getDate() {
+        if (isBlank()) return null;
+
+        ZoneId zoneId = ZoneId.systemDefault();
+        return Date.from(this.date.atZone(zoneId).toInstant());
+    }
+
+    public String getString() {
+        if (isBlank()) return null;
+
+        return this.value;
+    }
+
+    public Integer getInteger() {
+        if (isBlank()) return null;
+
+        return (int) Double.parseDouble(this.value);
+    }
+
+    public BigDecimal getBigDecimal() {
+        if (isBlank()) return null;
+
+        return new BigDecimal(this.value);
+    }
+
+    public Boolean isBlank() {
+        return this.blank;
+    }
+
+
+    public static List<HashMap<String, ExcelUtils>> parse(MultipartFile file) throws IOException {
+        List<HashMap<String, ExcelUtils>> dataList = new ArrayList<>();
         List<String> titleList = new ArrayList<>();
-        HashMap<String, Object> data;
+        HashMap<String, ExcelUtils> data;
+        ExcelUtils excelUtils;
 
         Workbook workbook = new XSSFWorkbook(file.getInputStream());
         // 读取第一个 sheet
@@ -50,28 +99,32 @@ public class ExcelUtils {
 
             for (int curCol = 0; curCol < colCount; curCol++) {
                 cell = row.getCell(curCol);
+                excelUtils = new ExcelUtils();
 
                 // 特殊单元格处理 - 空单元格
                 if (cell == null) {
-                    data.put(titleList.get(curCol), null);
+                    excelUtils.setBlank(true);
+                    data.put(titleList.get(curCol), excelUtils);
                     continue;
                 }
 
                 CellType cellType = cell.getCellType();
                 if (cellType == CellType._NONE || cellType == CellType.BLANK) {
-                    data.put(titleList.get(curCol), null);
+                    excelUtils.setBlank(true);
                 } else if (cellType == CellType.NUMERIC) {
                     // 特殊单元格处理 - 日期
                     if (DateUtil.isCellDateFormatted(cell)) {
-                        data.put(titleList.get(curCol), cell.getLocalDateTimeCellValue());
+                        excelUtils.setDate(cell.getLocalDateTimeCellValue());
                     } else {
-                        data.put(titleList.get(curCol), cell.getNumericCellValue());
+                        excelUtils.setValue(String.valueOf(cell.getNumericCellValue()));
                     }
                 } else if (cellType == CellType.STRING) {
-                    data.put(titleList.get(curCol), cell.getStringCellValue());
+                    excelUtils.setValue(cell.getStringCellValue());
                 } else {
                     throw new BizException("第 " + (curRow + 1) + " 行, 第 " + (curCol + 1) + " 列的单元格检测到异常值, 如果是公式, 请粘贴为值");
                 }
+
+                data.put(titleList.get(curCol), excelUtils);
             }
             dataList.add(data);
         }
