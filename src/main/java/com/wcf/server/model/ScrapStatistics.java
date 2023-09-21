@@ -44,9 +44,9 @@ public class ScrapStatistics {
     @Column(name = "comments", length = 255)
     private String comments;
 
-    @Transient
+    @Column(name = "create_time", insertable = false, updatable = false)
     private Date createTime;
 
-    @Transient
+    @Column(name = "update_time", insertable = false, updatable = false)
     private Date updateTime;
 }

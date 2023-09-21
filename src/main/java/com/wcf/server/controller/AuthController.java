@@ -1,7 +1,6 @@
 package com.wcf.server.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wcf.server.model.User;
 import com.wcf.server.base.response.ResultBody;
 import com.wcf.server.service.AuthService;
 import com.wcf.server.service.UserService;
@@ -24,8 +23,8 @@ public class AuthController {
     }
 
     @PostMapping("register")
-    public ResultBody add(@RequestBody User user) {
-        return ResultBody.success(userService.add(user));
+    public ResultBody add(@RequestBody JSONObject param) {
+        return ResultBody.success(userService.add(param));
     }
 
     @PostMapping("login")

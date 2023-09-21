@@ -32,10 +32,10 @@ public class Scrapy {
     @Column(name = "archive")
     private boolean archive = false;
 
-    @Transient
+    @Column(name = "create_time", insertable = false, updatable = false)
     private Date createTime;
 
-    @Transient
+    @Column(name = "update_time", insertable = false, updatable = false)
     private Date updateTime;
 }
 

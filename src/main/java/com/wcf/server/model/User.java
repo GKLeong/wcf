@@ -1,5 +1,6 @@
 package com.wcf.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wcf.server.utils.PasswordUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -27,6 +28,7 @@ public class User {
     private String email;
     @NotBlank
     @Size(min = 6)
+    @JsonIgnore
     private String password;
     @NotBlank
     @Size(min = 2)
@@ -44,10 +46,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+    @JsonIgnore
     private Boolean deleted = false;
-    @Transient
+    @Column(name = "create_time", insertable = false, updatable = false)
     private Date createTime;
-    @Transient
+    @Column(name = "update_time", insertable = false, updatable = false)
     private Date updateTime;
 
     public Long getId() {

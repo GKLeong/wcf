@@ -1,5 +1,6 @@
 package com.wcf.server.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wcf.server.base.response.BizException;
 import com.wcf.server.repository.RoleRepository;
 import com.wcf.server.repository.UserRepository;
@@ -53,10 +54,17 @@ public class UserService {
         return user.matchPassword(password);
     }
 
-    public User add(User user) {
+    public User add(JSONObject param) {
+        User user = new User();
+        user.setUsername(param.getString("username"));
+        user.setEmail(param.getString("email"));
+        user.setPassword(param.getString("password"));
         user.bCryptPassword();
-        user.setRoles(null);
-        user.setDeleted(false);
+        user.setName(param.getString("name"));
+        user.setGender(User.Gender.valueOf(param.getString("gender")));
+        user.setAddress(param.getString("address"));
+        user.setIdNumber(param.getString("idNumber"));
+        user.setHireDate(param.getDate("hireDate"));
         userRepository.save(user);
         return user;
     }
