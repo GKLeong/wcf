@@ -40,4 +40,8 @@ public class ScrapyService {
 
         scrapyRepository.saveAll(dataList);
     }
+
+    public List<Scrapy> findByArchive(boolean archive) {
+        return scrapyRepository.findByArchive(archive);
+    }
 }
