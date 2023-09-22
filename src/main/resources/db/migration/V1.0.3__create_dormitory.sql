@@ -15,8 +15,8 @@ CREATE TABLE dormitories
 CREATE TABLE dormitory_record
 (
     `id`           INT AUTO_INCREMENT PRIMARY KEY,
-    `dormitory_id` INT            NOT NULL,
     `date`         DATE           NOT NULL,
+    `dormitory_id` INT            NOT NULL,
     `water`        DECIMAL(10, 2) NOT NULL,
     `electricity`  DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (`dormitory_id`) REFERENCES dormitories (id),
