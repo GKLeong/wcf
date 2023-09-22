@@ -16,6 +16,7 @@ public class DormitoryRecord {
     private Long id;
 
     private Long dormitoryId;
+    private Date billDate;
 
     @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -26,4 +27,10 @@ public class DormitoryRecord {
 
     @Column(name = "electricity", precision = 10, scale = 2, nullable = false)
     private BigDecimal electricity;
+
+    @Column(name = "create_time", insertable = false, updatable = false)
+    private Date createTime;
+
+    @Column(name = "update_time", insertable = false, updatable = false)
+    private Date updateTime;
 }

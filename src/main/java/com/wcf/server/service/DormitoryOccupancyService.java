@@ -35,4 +35,8 @@ public class DormitoryOccupancyService {
         dormitoryOccupancy.setCheckOutDate(checkOutDate);
         return dormitoryOccupancyRepository.save(dormitoryOccupancy);
     }
+
+    public List<DormitoryOccupancy> findAllByDormitoryIdAndBillDate(Long dormitoryId, Date billDate, Date nextBillDate) {
+        return dormitoryOccupancyRepository.findAllByDormitoryIdAndBillDate(dormitoryId, billDate, nextBillDate);
+    }
 }

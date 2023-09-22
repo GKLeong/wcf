@@ -31,4 +31,8 @@ public class DormitoryService {
     public List<Dormitory> findAll() {
         return dormitoryRepository.findAll();
     }
+
+    public List<Dormitory> findAllByDeletedIsFalse() {
+        return dormitoryRepository.findAllByDeletedIsFalse();
+    }
 }

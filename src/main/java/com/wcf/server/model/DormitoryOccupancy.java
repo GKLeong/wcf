@@ -25,4 +25,10 @@ public class DormitoryOccupancy {
     @Column(name = "check_out_date")
     @Temporal(TemporalType.DATE)
     private Date checkOutDate;
+
+    @Column(name = "create_time", insertable = false, updatable = false)
+    private Date createTime;
+
+    @Column(name = "update_time", insertable = false, updatable = false)
+    private Date updateTime;
 }

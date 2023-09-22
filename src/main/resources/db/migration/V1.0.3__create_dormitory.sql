@@ -15,21 +15,26 @@ CREATE TABLE dormitories
 CREATE TABLE dormitory_record
 (
     `id`           INT AUTO_INCREMENT PRIMARY KEY,
-    `date`         DATE           NOT NULL,
     `dormitory_id` INT            NOT NULL,
+    `bill_date`    DATE           NOT NULL,
+    `date`         DATE           NOT NULL,
     `water`        DECIMAL(10, 2) NOT NULL,
     `electricity`  DECIMAL(10, 2) NOT NULL,
+    `create_time`  TIMESTAMP      NOT NULL DEFAULT current_timestamp,
+    `update_time`  TIMESTAMP      NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp,
     FOREIGN KEY (`dormitory_id`) REFERENCES dormitories (id),
-    UNIQUE (`dormitory_id`, `date`)
+    UNIQUE (`dormitory_id`, `bill_date`)
 );
 
 CREATE TABLE dormitory_occupancy
 (
     `id`             INT AUTO_INCREMENT PRIMARY KEY,
-    `user_id`        INT  NOT NULL,
-    `dormitory_id`   INT  NOT NULL,
-    `check_in_date`  DATE NOT NULL,
+    `user_id`        INT       NOT NULL,
+    `dormitory_id`   INT       NOT NULL,
+    `check_in_date`  DATE      NOT NULL,
     `check_out_date` DATE,
+    `create_time`    TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    `update_time`    TIMESTAMP NOT NULL DEFAULT current_timestamp ON UPDATE current_timestamp,
     FOREIGN KEY (`user_id`) REFERENCES users (id),
     FOREIGN KEY (`dormitory_id`) REFERENCES dormitories (id)
 );
@@ -51,6 +56,7 @@ CREATE TABLE dormitory_expenses
     `electricity_price`                 DECIMAL(10, 2) NOT NULL,
     `electricity_cost`                  DECIMAL(10, 2) NOT NULL,
     `total_cost`                        DECIMAL(10, 2) NOT NULL,
+    `create_time`                       TIMESTAMP      NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (`dormitory_id`) REFERENCES dormitories (id)
 );
 
@@ -67,6 +73,7 @@ CREATE TABLE dormitory_individual_expenses
     `dormitory_cost`   DECIMAL(10, 2) NOT NULL,
     `dormitory_due`    DECIMAL(10, 2) NOT NULL,
     `individual_share` DECIMAL(10, 2) NOT NULL,
+    `create_time`      TIMESTAMP      NOT NULL DEFAULT current_timestamp,
     FOREIGN KEY (`dormitory_id`) REFERENCES dormitories (id),
     FOREIGN KEY (`user_id`) REFERENCES users (id)
 );
