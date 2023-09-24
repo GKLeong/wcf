@@ -14,8 +14,6 @@ public class UserRole {
     private Long userId;
     @Column(name = "role_id")
     private Integer roleId;
-    @Column(name = "role_name")
-    private Role.ERole roleName;
 
     public UserRole() {
     }

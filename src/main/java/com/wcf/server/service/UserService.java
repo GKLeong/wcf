@@ -1,35 +1,29 @@
 package com.wcf.server.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.wcf.server.base.response.BizException;
-import com.wcf.server.repository.RoleRepository;
+import com.wcf.server.base.response.CommonEnum;
 import com.wcf.server.repository.UserRepository;
-import com.wcf.server.repository.UserRoleRepository;
 import com.wcf.server.model.Role;
 import com.wcf.server.model.User;
-import com.wcf.server.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final UserRoleRepository userRoleRepository;
+    private final UserRoleService userRoleService;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       RoleRepository roleRepository,
-                       UserRoleRepository userRoleRepository
+                       UserRoleService userRoleService
     ) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.userRoleRepository = userRoleRepository;
+        this.userRoleService = userRoleService;
     }
 
     public List<User> findAll() {
@@ -54,27 +48,32 @@ public class UserService {
         return user.matchPassword(password);
     }
 
-    public User add(JSONObject param) {
+    public User add(String username, String email, String password, String name, String gender, String address, String idNumber, Date hireDate) {
         User user = new User();
-        user.setUsername(param.getString("username"));
-        user.setEmail(param.getString("email"));
-        user.setPassword(param.getString("password"));
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
         user.bCryptPassword();
-        user.setName(param.getString("name"));
-        user.setGender(User.Gender.valueOf(param.getString("gender")));
-        user.setAddress(param.getString("address"));
-        user.setIdNumber(param.getString("idNumber"));
-        user.setHireDate(param.getDate("hireDate"));
-        userRepository.save(user);
+        user.setName(name);
+        user.setGender(User.Gender.valueOf(gender));
+        user.setAddress(address);
+        user.setIdNumber(idNumber);
+        user.setHireDate(hireDate);
+        user = userRepository.save(user);
+
+        userRoleService.joinRole(user, Role.ERole.ROLE_USER);
         return user;
     }
 
-    public void addRole(Long userId, Integer roleId) {
-        Role role = roleRepository.findById(roleId).orElseThrow(() -> new UsernameNotFoundException("角色不存在: " + roleId));
-        UserRole userRole = new UserRole();
-        userRole.setUserId(userId);
-        userRole.setRoleId(role.getId());
-        userRole.setRoleName(role.getName());
-        userRoleRepository.save(userRole);
+    public void addFirstAdmin() {
+        if (userRoleService.haveAdminUser()) throw new BizException(CommonEnum.NOT_FOUND_API);
+        User user = new User();
+        user.setUsername("wcf");
+        user.setPassword("wcf6888888");
+        user.bCryptPassword();
+        user.setName("wcf");
+        user.setGender(User.Gender.Other);
+        user = userRepository.save(user);
+        userRoleService.joinRole(user, Role.ERole.ROLE_ADMIN);
     }
 }

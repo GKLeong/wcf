@@ -20,3 +20,10 @@ docker run -d \
   --restart unless-stopped \
   wcf
 ```
+
+## 创建第一个管理员账号
+仅当系统中还没有管理员账号的时候访问该地址可以创建一个管理员账号
+
+post: /api/auth/addFirstAdmin
+
+默认账号 wcf 默认密码 wcf6888888

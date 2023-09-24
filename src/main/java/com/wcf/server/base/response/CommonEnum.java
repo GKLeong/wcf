@@ -10,6 +10,8 @@ public enum CommonEnum implements BaseErrorInfoInterface {
     REQUEST_METHOD_SUPPORT_ERROR("40000", "当前请求方法不支持"),
     NOT_FOUND_FILE_NAME("40001", "读取不到文件名"),
     NOT_ALLOW_SUFFIX("40002", "未受支持的后缀"),
+    NOT_FOUND_ADMIN_ROLE("40003", "找不到管理员用户组信息"),
+    NOT_FOUND_API("40004", "API 已停用"),
     INTERNAL_SERVER_ERROR("500", "服务器内部错误!"),
     SERVER_BUSY("503", "服务器正忙，请稍后再试!"),
     FAIL_TO_CREATE_DIR("50001", "创建目录失败"),
