@@ -1,3 +1,5 @@
+app:
+  vue-url: "http://localhost:5173/"
 jwt:
   # 密钥请自行生成, 和 UUID 长度一致
   secret: "44d6e7c6-488d-4a5a-b5f2-86a0bcd8908d"
