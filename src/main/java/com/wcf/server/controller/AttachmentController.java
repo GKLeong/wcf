@@ -24,13 +24,8 @@ public class AttachmentController {
     }
 
     @PostMapping("images")
-    @Log(value = "上传图片附件", saveParams = false)
+    @Log(value = "上传图片", saveParams = false)
     public ResultBody addImage(@RequestParam("file") MultipartFile file) {
         return ResultBody.success(attachmentService.addImage(file));
-    }
-
-    @PostMapping("excel")
-    public ResultBody parseExcel(@RequestParam("file") MultipartFile file) throws IOException {
-        return ResultBody.success(ExcelUtils.parse(file));
     }
 }

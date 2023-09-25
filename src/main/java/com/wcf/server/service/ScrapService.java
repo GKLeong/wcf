@@ -20,14 +20,19 @@ import java.util.*;
 public class ScrapService {
     private final ScrapRepository scrapRepository;
     private final ScrapStatisticService scrapStatisticService;
+    private final AttachmentService attachmentService;
 
     @Autowired
-    public ScrapService(ScrapRepository scrapRepository, ScrapStatisticService scrapStatisticService) {
+    public ScrapService(ScrapRepository scrapRepository,
+                        ScrapStatisticService scrapStatisticService,
+                        AttachmentService attachmentService) {
         this.scrapRepository = scrapRepository;
         this.scrapStatisticService = scrapStatisticService;
+        this.attachmentService = attachmentService;
     }
 
     public void uploadExcel(MultipartFile file) throws IOException {
+        attachmentService.addExcel(file);
         List<HashMap<String, ExcelUtils>> excelDataList = ExcelUtils.parse(file);
         List<Scrap> dataList = new ArrayList<>();
         Scrap data;

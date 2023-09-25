@@ -35,25 +35,25 @@ public class AttachmentService {
     public Attachment addImage(MultipartFile file) {
         // 原始文件名
         String filename = file.getOriginalFilename();
-
-        // 文件格式校验
-        if (filename == null) {
-            throw new BizException(CommonEnum.NOT_FOUND_FILE_NAME);
-        }
-        int lastPoint = filename.lastIndexOf(".");
-        String suffix;// 后缀名
-        if (lastPoint == -1 || (suffix = filename.substring(lastPoint + 1)).isEmpty()) {
-            throw new BizException(CommonEnum.NOT_ALLOW_SUFFIX);
-        }
-
         Set<String> allowSuffix = new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "gif"));
-        if (!allowSuffix.contains(suffix.toLowerCase())) {
-            throw new BizException(CommonEnum.NOT_ALLOW_SUFFIX);
-        }
+        String suffix = checkAndGetSuffix(filename, allowSuffix);
+
+        return saveFile(file, "image", filename, suffix);
+    }
+
+    public Attachment addExcel(MultipartFile file) {
+        String filename = file.getOriginalFilename();
+        Set<String> allowSuffix = new HashSet<>(Arrays.asList("xlsx","xls"));
+        String suffix = checkAndGetSuffix(filename, allowSuffix);
+
+        return saveFile(file, "excel", filename, suffix);
+    }
+
+    private Attachment saveFile(MultipartFile file, String type, String filename, String suffix) {
         try {
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
             User user = userService.findMe();
-            String folder = "images" + new SimpleDateFormat("/yyyy/MM/dd/").format(new Date());
+            String folder = type + new SimpleDateFormat("/yyyy/MM/dd/").format(new Date());
             String newFilename = UUID.randomUUID() + "." + suffix;
 
             // 若目录不存在则创建目录
@@ -66,9 +66,11 @@ public class AttachmentService {
             Attachment attachment = new Attachment();
             attachment.setUploader(user);
             attachment.setFileName(filename);
-            attachment.setFileType("image");
-            attachment.setImageWidth(bufferedImage.getWidth());
-            attachment.setImageHeight(bufferedImage.getHeight());
+            attachment.setFileType(type);
+            if (type.equalsIgnoreCase("image")) {
+                attachment.setImageWidth(bufferedImage.getWidth());
+                attachment.setImageHeight(bufferedImage.getHeight());
+            }
             attachment.setLink(attachmentUrl + folder + newFilename);
 
             // 保存文件并创建数据
@@ -79,5 +81,23 @@ public class AttachmentService {
         } catch (Exception e) {
             throw new BizException(CommonEnum.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private String checkAndGetSuffix(String filename, Set<String> allowSuffix) {
+        // 文件格式校验
+        if (filename == null) {
+            throw new BizException(CommonEnum.NOT_FOUND_FILE_NAME);
+        }
+        int lastPoint = filename.lastIndexOf(".");
+        String suffix;// 后缀名
+        if (lastPoint == -1 || (suffix = filename.substring(lastPoint + 1)).isEmpty()) {
+            throw new BizException(CommonEnum.NOT_ALLOW_SUFFIX);
+        }
+
+        if (!allowSuffix.contains(suffix.toLowerCase())) {
+            throw new BizException(CommonEnum.NOT_ALLOW_SUFFIX);
+        }
+
+        return suffix;
     }
 }
