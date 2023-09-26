@@ -16,6 +16,8 @@ public class DormitoryRecord {
     private Long id;
 
     private Long dormitoryId;
+    @Transient
+    private String dormitory;
     private Date billDate;
 
     @Column(name = "date", nullable = false)
