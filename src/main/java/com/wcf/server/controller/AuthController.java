@@ -7,8 +7,6 @@ import com.wcf.server.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -31,9 +29,7 @@ public class AuthController {
                           @RequestParam(value = "address", required = false) String address,
                           @RequestParam(value = "idNumber", required = false) String idNumber,
                           @RequestParam(value = "hireDate", required = false) String hireDate) {
-        Date hd = null;
-        if (hireDate != null) hd = DateUtils.dateFormat(hireDate);
-        return ResultBody.success(userService.add(username, email, password, name, gender, address, idNumber, hd));
+        return ResultBody.success(userService.add(username, email, password, name, gender, address, idNumber, DateUtils.dateFormat(hireDate)));
     }
 
     @PostMapping("login")

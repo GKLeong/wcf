@@ -17,6 +17,7 @@ public class DateUtils {
      * @return 转换后的 Date 对象
      */
     public static Date dateFormat(String date) {
+        if (date == null) return null;
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             return formatter.parse(date);
@@ -29,6 +30,7 @@ public class DateUtils {
 
     /**
      * 生成账单日期
+     *
      * @param date 日期
      * @return 如果 date<=15号，得到当月1号的日期，否则得到下个月1号的日期
      */
@@ -79,8 +81,9 @@ public class DateUtils {
 
     /**
      * 计算两个日期的天数差, 小数部分进一
+     *
      * @param earlier 较小的日期
-     * @param later 较大的日期
+     * @param later   较大的日期
      * @return 31号0时-1号0时 = 30天/ 2号 12时 - 1号 8时 = 2天
      */
     public static int calculateDaysDifference(Date earlier, Date later) {

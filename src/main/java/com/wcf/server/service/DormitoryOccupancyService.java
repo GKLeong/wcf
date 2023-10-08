@@ -32,7 +32,7 @@ public class DormitoryOccupancyService {
         List<DormitoryOccupancy> dormitoryOccupancyList = dormitoryOccupancyRepository.findAll();
         if (dormitoryOccupancyList.size() > 0) {
             Map<Long, String> dormitoryMap = dormitoryService.findAll().stream().collect(Collectors.toMap(Dormitory::getId, Dormitory::getRoomNumber));
-            Map<Long, String> userMap = userService.findAllIncludeDeleted().stream().collect(Collectors.toMap(User::getId, User::getName));
+            Map<Long, String> userMap = userService.findAll().stream().collect(Collectors.toMap(User::getId, User::getName));
             dormitoryOccupancyList.forEach(data->{
                 data.setDormitory(dormitoryMap.get(data.getDormitoryId()));
                 data.setUser(userMap.get(data.getUserId()));

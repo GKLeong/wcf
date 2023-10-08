@@ -26,26 +26,27 @@ public class UserService {
         this.userRoleService = userRoleService;
     }
 
-    public List<User> findAll() {
+    public List<User> findAllByDeletedIsFalse() {
         return userRepository.findAllByDeletedIsFalse();
     }
 
-    public List<User> findAllIncludeDeleted() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findById(long id) {
-        return userRepository.findById(id);
+    public User findByIdAndDeletedIsFalse(long id) {
+        return userRepository.findByIdAndDeletedIsFalse(id)
+                .orElseThrow(() -> new BizException("用户id不存在: " + id));
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
+    public User findByUsernameAndDeletedIsFalse(String username) {
+        return userRepository.findByUsernameAndDeletedIsFalse(username)
                 .orElseThrow(() -> new BizException("用户名不存在: " + username));
     }
 
     public User findMe() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return findByUsername(userDetails.getUsername());
+        return findByUsernameAndDeletedIsFalse(userDetails.getUsername());
     }
 
     public boolean matchPassword(User user, String password) {
@@ -67,6 +68,22 @@ public class UserService {
 
         userRoleService.joinRole(user, Role.ERole.ROLE_USER);
         return user;
+    }
+
+    public void update(Long id, String email, String password, String name, String gender, String address, String idNumber, Date hireDate, Date resignationDate) {
+        User user = findByIdAndDeletedIsFalse(id);
+        user.setEmail(email);
+        if (password != null && !password.isBlank()) {
+            user.setPassword(password);
+            user.bCryptPassword();
+        }
+        user.setName(name);
+        user.setGender(User.Gender.valueOf(gender));
+        user.setAddress(address);
+        user.setIdNumber(idNumber);
+        user.setHireDate(hireDate);
+        user.setResignationDate(resignationDate);
+        userRepository.save(user);
     }
 
     public void addFirstAdmin() {

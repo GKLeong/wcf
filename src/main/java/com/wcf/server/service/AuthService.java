@@ -19,10 +19,10 @@ public class AuthService {
     }
 
     public HashMap<String, String> getToken(String username, String password) {
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsernameAndDeletedIsFalse(username);
         if (user == null || !userService.matchPassword(user, password)) return null;
 
-        HashMap<String, String> result = new HashMap<String, String>();
+        HashMap<String, String> result = new HashMap<>();
         result.put("token", jwtUtils.generateJwtToken(user.getUsername()));
         return result;
     }
