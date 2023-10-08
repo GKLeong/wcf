@@ -1,0 +1,46 @@
+package com.wcf.server.controller;
+
+import com.wcf.server.base.response.ResultBody;
+import com.wcf.server.service.LaborCostService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+
+import static com.wcf.server.utils.DateUtils.dateFormat;
+
+@RestController
+@RequestMapping("/api/labor/cost")
+public class LaborCostController {
+    private final LaborCostService laborCostService;
+
+    @Autowired
+    public LaborCostController(LaborCostService laborCostService) {
+        this.laborCostService = laborCostService;
+    }
+
+    @GetMapping
+    public ResultBody findAll() {
+        return ResultBody.success(laborCostService.findAll());
+    }
+
+    @GetMapping("/effective")
+    public ResultBody findEffective() {
+        return ResultBody.success(laborCostService.findEffective());
+    }
+
+    @PostMapping
+    public ResultBody add(@RequestParam Long departmentId,
+                          @RequestParam String action,
+                          @RequestParam BigDecimal price,
+                          @RequestParam String comments,
+                          @RequestParam String effectiveDate) {
+        return ResultBody.success(laborCostService.add(departmentId, action, price, comments, dateFormat(effectiveDate)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResultBody delete(@PathVariable Long id) {
+        laborCostService.deleteById(id);
+        return ResultBody.success();
+    }
+}
