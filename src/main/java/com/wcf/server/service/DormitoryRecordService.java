@@ -44,7 +44,7 @@ public class DormitoryRecordService {
         // 插入宿舍房号
         if (dormitoryRecordList.size() > 0) {
             Map<Long, String> dormitoryMap = dormitoryService.findAll().stream().collect(Collectors.toMap(Dormitory::getId, Dormitory::getRoomNumber));
-            dormitoryRecordList.forEach(data->{
+            dormitoryRecordList.forEach(data -> {
                 data.setDormitory(dormitoryMap.get(data.getDormitoryId()));
             });
         }

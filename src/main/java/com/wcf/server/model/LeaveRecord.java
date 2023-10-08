@@ -17,6 +17,8 @@ public class LeaveRecord {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
+    @Transient
+    private String user;
 
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.DATE)

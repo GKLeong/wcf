@@ -25,7 +25,7 @@ public class DormitoryOccupancyService {
                                      UserService userService) {
         this.dormitoryOccupancyRepository = dormitoryOccupancyRepository;
         this.dormitoryService = dormitoryService;
-        this.userService=userService;
+        this.userService = userService;
     }
 
     public List<DormitoryOccupancy> findAll() {
@@ -33,7 +33,7 @@ public class DormitoryOccupancyService {
         if (dormitoryOccupancyList.size() > 0) {
             Map<Long, String> dormitoryMap = dormitoryService.findAll().stream().collect(Collectors.toMap(Dormitory::getId, Dormitory::getRoomNumber));
             Map<Long, String> userMap = userService.findAll().stream().collect(Collectors.toMap(User::getId, User::getName));
-            dormitoryOccupancyList.forEach(data->{
+            dormitoryOccupancyList.forEach(data -> {
                 data.setDormitory(dormitoryMap.get(data.getDormitoryId()));
                 data.setUser(userMap.get(data.getUserId()));
             });
