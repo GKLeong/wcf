@@ -46,6 +46,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+    private Long departmentId;
+    @Transient
+    private String department;
     @JsonIgnore
     private Boolean deleted = false;
     @Column(name = "create_time", insertable = false, updatable = false)
@@ -60,7 +63,7 @@ public class User {
     public enum Gender {
         Male("男"), Female("女"), Other("其他");
 
-        private String name;
+        private final String name;
 
         Gender(String gender) {
             this.name = gender;

@@ -40,4 +40,11 @@ public class UserController {
         userService.update(id, email, password, name, gender, address, idNumber, DateUtils.dateFormat(hireDate), DateUtils.dateFormat(resignationDate));
         return ResultBody.success();
     }
+
+    @PutMapping("/{id}/department")
+    public ResultBody updateDepartment(@PathVariable Long id,
+                                       @RequestParam Long departmentId) {
+        userService.setDepartment(id, departmentId);
+        return ResultBody.success();
+    }
 }
