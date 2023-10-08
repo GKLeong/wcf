@@ -52,6 +52,10 @@ public class DormitoryExpenseService {
         Date nextBillDate = DateUtils.getNextMonthFirstDay(billDate);
         List<Dormitory> dormitoryList = dormitoryService.findAllByDeletedIsFalse();
 
+        // 删除已有数据
+        dormitoryExpenseRepository.deleteByBillMonth(billDate);
+        dormitoryIndividualExpenseRepository.deleteByBillMonth(billDate);
+
         for (Dormitory d : dormitoryList) {
             DormitoryRecord record = dormitoryRecordService.findByBillDate(d.getId(), billDate);
             DormitoryRecord nextRecord = dormitoryRecordService.findByBillDate(d.getId(), nextBillDate);
