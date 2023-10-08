@@ -27,6 +27,10 @@ public class UserService {
     }
 
     public List<User> findAll() {
+        return userRepository.findAllByDeletedIsFalse();
+    }
+
+    public List<User> findAllIncludeDeleted() {
         return userRepository.findAll();
     }
 

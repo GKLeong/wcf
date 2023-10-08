@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class DormitoryIndividualExpenseService {
-    private DormitoryIndividualExpenseRepository dormitoryIndividualExpenseRepository;
+    private final DormitoryIndividualExpenseRepository dormitoryIndividualExpenseRepository;
 
     @Autowired
     public DormitoryIndividualExpenseService(DormitoryIndividualExpenseRepository dormitoryIndividualExpenseRepository) {

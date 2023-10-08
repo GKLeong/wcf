@@ -16,7 +16,14 @@ public class DormitoryOccupancy {
     private Long id;
 
     private Long dormitoryId;
+
+    @Transient
+    private String dormitory;
+
     private Long userId;
+
+    @Transient
+    private String user;
 
     @Column(name = "check_in_date", nullable = false)
     @Temporal(TemporalType.DATE)
