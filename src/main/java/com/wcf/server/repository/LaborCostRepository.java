@@ -13,6 +13,15 @@ public interface LaborCostRepository extends JpaRepository<LaborCost, Long> {
             "WHERE (lc.departmentId, lc.action, lc.effectiveDate) IN " +
             "(SELECT lc2.departmentId, lc2.action, MAX(lc2.effectiveDate) FROM LaborCost lc2 " +
             "WHERE lc2.effectiveDate <= CURRENT_TIME()" +
-            "GROUP BY lc2.departmentId, lc2.action)")
+            "GROUP BY lc2.departmentId, lc2.action) ORDER BY lc.departmentId, lc.action")
     List<LaborCost> findEffective();
+
+    @Query("SELECT lc FROM LaborCost lc WHERE lc.effectiveDate <= CURRENT_TIME() ORDER BY lc.departmentId, lc.action, lc.effectiveDate")
+    List<LaborCost> findOld();
+
+    @Query("SELECT lc FROM LaborCost lc WHERE lc.effectiveDate > CURRENT_TIME() ORDER BY lc.departmentId, lc.action, lc.effectiveDate")
+    List<LaborCost> findFuture();
+
+    @Query("SELECT lc FROM LaborCost lc ORDER BY lc.departmentId, lc.action, lc.effectiveDate")
+    List<LaborCost> findAll();
 }

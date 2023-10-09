@@ -29,6 +29,16 @@ public class LaborCostController {
         return ResultBody.success(laborCostService.findEffective());
     }
 
+    @GetMapping("/old")
+    public ResultBody findOld() {
+        return ResultBody.success(laborCostService.findOld());
+    }
+
+    @GetMapping("/future")
+    public ResultBody findFuture() {
+        return ResultBody.success(laborCostService.findFuture());
+    }
+
     @PostMapping
     public ResultBody add(@RequestParam Long departmentId,
                           @RequestParam String action,

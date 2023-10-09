@@ -22,6 +22,14 @@ public class LaborCostService {
         return laborCostRepository.findAll();
     }
 
+    public List<LaborCost> findOld() {
+        return laborCostRepository.findOld();
+    }
+
+    public List<LaborCost> findFuture() {
+        return laborCostRepository.findFuture();
+    }
+
     public List<LaborCost> findEffective() {
         return laborCostRepository.findEffective();
     }
