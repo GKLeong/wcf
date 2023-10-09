@@ -26,6 +26,11 @@ public class DepartmentService {
                 .orElseThrow(() -> new BizException("部门id不存在: " + id));
     }
 
+    public Department findByName(String name) {
+        return departmentRepository.findByName(name)
+                .orElseThrow(() -> new BizException("部门不存在: " + name));
+    }
+
     public Department add(String name) {
         Department department = new Department();
         department.setName(name);
