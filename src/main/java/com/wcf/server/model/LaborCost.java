@@ -28,7 +28,7 @@ public class LaborCost {
     @Column(name = "comments")
     private String comments;
 
-    @Column(name = "effective_date")
+    @Column(name = "effective_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date effectiveDate;
 
@@ -36,5 +36,8 @@ public class LaborCost {
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
     private Department department;
 
+    public String getDepartment() {
+        return department.getName();
+    }
 }
 
