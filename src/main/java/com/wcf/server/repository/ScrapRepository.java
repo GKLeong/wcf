@@ -26,4 +26,7 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     @Modifying
     @Query("UPDATE Scrap s SET s.archive=true WHERE s.dateRecorded >= :f AND s.dateRecorded <= :e AND s.archive = false")
     void archive(@Param("f") Date f, @Param("e") Date e);
+
+    @Query("SELECT s.dateRecorded,SUM(s.weightKg),SUM(s.totalPackage) FROM Scrap s WHERE s.dateRecorded >= :f AND s.dateRecorded <= :e GROUP BY s.dateRecorded")
+    List<Object[]> sumByRecorded(@Param("f") Date f, @Param("e") Date e);
 }

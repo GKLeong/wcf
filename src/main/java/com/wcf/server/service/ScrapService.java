@@ -85,4 +85,8 @@ public class ScrapService {
         scrapRepository.archive(from, end);
         scrapStatisticService.save(scrapStatistic);
     }
+
+    public List<Object[]> sumByRecorded(Date from, Date end) {
+        return scrapRepository.sumByRecorded(from, end);
+    }
 }
