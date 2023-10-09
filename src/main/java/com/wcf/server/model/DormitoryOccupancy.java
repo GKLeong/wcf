@@ -15,15 +15,19 @@ public class DormitoryOccupancy {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "dormitory_id")
     private Long dormitoryId;
 
-    @Transient
-    private String dormitory;
+    @ManyToOne
+    @JoinColumn(name = "dormitory_id", insertable = false, updatable = false)
+    private Dormitory dormitory;
 
+    @Column(name = "user_id")
     private Long userId;
 
-    @Transient
-    private String user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
     @Column(name = "check_in_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -38,4 +42,12 @@ public class DormitoryOccupancy {
 
     @Column(name = "update_time", insertable = false, updatable = false)
     private Date updateTime;
+
+    public String getDormitory() {
+        return dormitory.getRoomNumber();
+    }
+
+    public String getUser() {
+        return user.getName();
+    }
 }

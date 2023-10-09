@@ -17,8 +17,9 @@ public class LeaveRecord {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
-    @Transient
-    private String user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
 
     @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -43,5 +44,9 @@ public class LeaveRecord {
     public void setEndDate(Date date) {
         endDate = date;
         if (startDate != null) duration = DateUtils.calculateDaysDifference(startDate, endDate);
+    }
+
+    public String getUser() {
+        return user.getName();
     }
 }

@@ -46,9 +46,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+    @Column(name = "department_id")
     private Long departmentId;
-    @Transient
-    private String department;
+    @ManyToOne
+    @JoinColumn(name = "department_id", insertable = false, updatable = false)
+    private Department department;
     @JsonIgnore
     private Boolean deleted = false;
     @Column(name = "create_time", insertable = false, updatable = false)
@@ -80,6 +82,10 @@ public class User {
 
     public boolean matchPassword(String password) {
         return new PasswordUtils().passwordEncoder().matches(password, this.password);
+    }
+
+    public String getDepartment() {
+        return department.getName();
     }
 
 }

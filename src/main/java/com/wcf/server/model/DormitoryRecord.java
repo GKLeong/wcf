@@ -15,9 +15,11 @@ public class DormitoryRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "dormitory_id")
     private Long dormitoryId;
-    @Transient
-    private String dormitory;
+    @ManyToOne
+    @JoinColumn(name = "dormitory_id", insertable = false, updatable = false)
+    private Dormitory dormitory;
     private Date billDate;
 
     @Column(name = "date", nullable = false)
@@ -35,4 +37,8 @@ public class DormitoryRecord {
 
     @Column(name = "update_time", insertable = false, updatable = false)
     private Date updateTime;
+
+    public String getDormitory() {
+        return dormitory.getRoomNumber();
+    }
 }

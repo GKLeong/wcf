@@ -2,7 +2,6 @@ package com.wcf.server.service;
 
 import com.wcf.server.base.response.BizException;
 import com.wcf.server.base.response.CommonEnum;
-import com.wcf.server.model.Department;
 import com.wcf.server.repository.UserRepository;
 import com.wcf.server.model.Role;
 import com.wcf.server.model.User;
@@ -13,23 +12,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final UserRoleService userRoleService;
-    private final DepartmentService departmentService;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       UserRoleService userRoleService,
-                       DepartmentService departmentService
-    ) {
+                       UserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
-        this.departmentService = departmentService;
     }
 
     public List<User> findAllByDeletedIsFalse() {
@@ -37,14 +30,7 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        List<User> users = userRepository.findAll();
-        if (users.size() > 0) {
-            Map<Long, String> departments = departmentService.findAll().stream().collect(Collectors.toMap(Department::getId, Department::getName));
-            users.forEach(data -> {
-                if (data.getDepartmentId() != null) data.setDepartment(departments.get(data.getDepartmentId()));
-            });
-        }
-        return users;
+        return userRepository.findAll();
     }
 
     public User findByIdAndDeletedIsFalse(long id) {
@@ -59,10 +45,7 @@ public class UserService {
 
     public User findMe() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = findByUsernameAndDeletedIsFalse(userDetails.getUsername());
-        if (user.getDepartmentId() != null)
-            user.setDepartment(departmentService.findById(user.getDepartmentId()).getName());
-        return user;
+        return findByUsernameAndDeletedIsFalse(userDetails.getUsername());
     }
 
     public boolean matchPassword(User user, String password) {
