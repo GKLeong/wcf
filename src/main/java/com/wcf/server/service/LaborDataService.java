@@ -60,6 +60,12 @@ public class LaborDataService {
                         Function.identity()
                 ));
         LaborCost laborCost;
+        Map<String, Long> departmentMap = departmentService.findAll().stream().collect(Collectors.toMap(Department::getName, Department::getId));
+        Map<String, User> userMap = userService.findAllByDeletedIsFalse()
+                .stream().collect(Collectors.toMap(
+                        lc -> String.format("%d+%s", lc.getDepartmentId(), lc.getName()),
+                        Function.identity()
+                ));
 
         for (HashMap<String, ExcelUtils> excelData : excelDataList) {
             data = new LaborData();
@@ -67,11 +73,11 @@ public class LaborDataService {
             // productId
             data.setProductName(excelData.get("产品").getString());
             data.setDate(excelData.get("日期").getDate());
-
-            Department department = departmentService.findByName(excelData.get("部门").getString());
-            data.setDepartmentId(department.getId());
-
+            data.setDepartmentId(departmentMap.get(excelData.get("部门").getString()));
             data.setAction(excelData.get("动作").getString());
+            data.setNotes(excelData.get("备注").getString());
+            data.setCardGroup(excelData.get("卡片").getString());
+            data.setCardNumber(excelData.get("编号").getString());
 
             String laborCostMapKey = String.format("%d+%s", data.getDepartmentId(), data.getAction());
             laborCost = laborCostEffectiveMap.get(laborCostMapKey);
@@ -81,14 +87,9 @@ public class LaborDataService {
             data.setQuantity(excelData.get("数量").getBigDecimal());
             data.setAmount(data.getQuantity().multiply(data.getFrequency()).multiply(data.getUnitPrice()));
 
-            data.setNotes(excelData.get("备注").getString());
-
-            user = userService.findByUsernameAndDeletedIsFalse(excelData.get("生产者").getString());
+            user = userMap.get(String.format("%d+%s", data.getDepartmentId(), excelData.get("生产者").getString()));
             data.setUserId(user.getId());
             data.setProducer(user.getName());
-
-            data.setCardGroup(excelData.get("卡片").getString());
-            data.setCardNumber(excelData.get("编号").getString());
             dataList.add(data);
         }
 

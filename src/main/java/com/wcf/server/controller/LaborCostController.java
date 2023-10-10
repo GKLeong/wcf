@@ -4,7 +4,9 @@ import com.wcf.server.base.response.ResultBody;
 import com.wcf.server.service.LaborCostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import static com.wcf.server.utils.DateUtils.dateFormat;
@@ -43,9 +45,15 @@ public class LaborCostController {
     public ResultBody add(@RequestParam Long departmentId,
                           @RequestParam String action,
                           @RequestParam BigDecimal price,
-                          @RequestParam(value = "comments",required = false) String comments,
+                          @RequestParam(value = "comments", required = false) String comments,
                           @RequestParam String effectiveDate) {
         return ResultBody.success(laborCostService.add(departmentId, action, price, comments, dateFormat(effectiveDate)));
+    }
+
+    @PostMapping("/excel")
+    public ResultBody parseExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        laborCostService.uploadExcel(file);
+        return ResultBody.success();
     }
 
     @DeleteMapping("/{id}")
