@@ -43,7 +43,7 @@ public class LaborCostController {
     public ResultBody add(@RequestParam Long departmentId,
                           @RequestParam String action,
                           @RequestParam BigDecimal price,
-                          @RequestParam String comments,
+                          @RequestParam(value = "comments",required = false) String comments,
                           @RequestParam String effectiveDate) {
         return ResultBody.success(laborCostService.add(departmentId, action, price, comments, dateFormat(effectiveDate)));
     }

@@ -37,6 +37,7 @@ public class LaborCost {
     private Department department;
 
     public String getDepartment() {
+        if (department == null) return null;
         return department.getName();
     }
 }
