@@ -47,7 +47,7 @@ public class LaborData {
     @Column(name = "unit_price", precision = 6, scale = 4, nullable = false)
     private BigDecimal unitPrice;
 
-    @Column(name = "amount", precision = 8, scale = 2, nullable = false)
+    @Column(name = "amount", precision = 10, scale = 4, nullable = false)
     private BigDecimal amount;
 
     @Column(name = "notes", columnDefinition = "TEXT")

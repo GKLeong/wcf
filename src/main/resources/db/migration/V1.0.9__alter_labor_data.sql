@@ -1,0 +1,2 @@
+ALTER TABLE labor_data
+    MODIFY amount DECIMAL(10, 4) NOT NULL;
