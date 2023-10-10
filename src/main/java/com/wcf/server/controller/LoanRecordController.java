@@ -30,7 +30,7 @@ public class LoanRecordController {
                           @RequestParam String purpose,
                           @RequestParam String paymentDate,
                           @RequestParam String paymentMethod,
-                          @RequestParam String notes) {
+                          @RequestParam(value = "note", required = false) String notes) {
         return ResultBody.success(loanRecordService.add(userId, amount, purpose, dateFormat(paymentDate), paymentMethod, notes));
     }
 
