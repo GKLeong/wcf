@@ -39,6 +39,7 @@ public class DormitoryRecord {
     private Date updateTime;
 
     public String getDormitory() {
+        if (dormitory == null) return null;
         return dormitory.getRoomNumber();
     }
 }

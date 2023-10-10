@@ -85,6 +85,7 @@ public class User {
     }
 
     public String getDepartment() {
+        if (department == null) return null;
         return department.getName();
     }
 

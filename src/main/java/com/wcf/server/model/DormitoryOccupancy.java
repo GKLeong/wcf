@@ -44,10 +44,12 @@ public class DormitoryOccupancy {
     private Date updateTime;
 
     public String getDormitory() {
+        if (dormitory == null) return null;
         return dormitory.getRoomNumber();
     }
 
     public String getUser() {
+        if (user == null) return null;
         return user.getName();
     }
 }

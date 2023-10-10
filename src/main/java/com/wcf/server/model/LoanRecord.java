@@ -43,6 +43,7 @@ public class LoanRecord {
     private String notes;
 
     public String getUser() {
+        if (user == null) return null;
         return user.getName();
     }
 

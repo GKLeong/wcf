@@ -47,6 +47,7 @@ public class LeaveRecord {
     }
 
     public String getUser() {
+        if (user == null) return null;
         return user.getName();
     }
 }
