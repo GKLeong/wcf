@@ -72,5 +72,10 @@ public class LaborData {
     @JoinColumn(name = "department_id", insertable = false, updatable = false)
     private Department department;
 
+    public String getDepartment() {
+        if (department == null) return null;
+        return department.getName();
+    }
+
 }
 

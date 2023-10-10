@@ -77,7 +77,7 @@ public class LaborDataService {
             data.setAction(excelData.get("动作").getString());
             data.setNotes(excelData.get("备注").getString());
             data.setCardGroup(excelData.get("卡片").getString());
-            data.setCardNumber(excelData.get("编号").getString());
+            data.setCardNumber(excelData.get("编号").getIntegerString());
 
             String laborCostMapKey = String.format("%d+%s", data.getDepartmentId(), data.getAction());
             laborCost = laborCostEffectiveMap.get(laborCostMapKey);

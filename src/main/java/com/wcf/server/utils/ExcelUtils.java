@@ -44,6 +44,12 @@ public class ExcelUtils {
         return this.value;
     }
 
+    /* excel 的整数值作为字符串读取的时候会变成x.0这样的格式, 这个方法避免出现这个情况 */
+    public String getIntegerString() {
+        if (isBlank()) return null;
+        return getInteger().toString();
+    }
+
     public Integer getInteger() {
         if (isBlank()) return null;
 
