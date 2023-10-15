@@ -63,14 +63,14 @@ public class SalaryConfig {
     private User user;
 
     public enum SalaryType {
-        INCREASE,
-        DECREASE
+        increase,
+        decrease
     }
 
     public enum CycleUnit {
-        DAY,
-        MONTH,
-        YEAR
+        day,
+        month,
+        year
     }
 
     public String getUser() {
