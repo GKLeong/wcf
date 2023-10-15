@@ -13,10 +13,13 @@ import java.util.List;
 @Service
 public class LoanRecordService {
     private final LoanRecordRepository loanRecordRepository;
+    private final UserService userService;
 
     @Autowired
-    public LoanRecordService(LoanRecordRepository loanRecordRepository) {
+    public LoanRecordService(LoanRecordRepository loanRecordRepository,
+                             UserService userService) {
         this.loanRecordRepository = loanRecordRepository;
+        this.userService=userService;
     }
 
     public List<LoanRecord> findAll() {
@@ -30,13 +33,15 @@ public class LoanRecordService {
         loanRecord.setPurpose(purpose);
         loanRecord.setPaymentDate(paymentDate);
         loanRecord.setPaymentMethod(paymentMethod);
+        loanRecord.setCreatorId(userService.getCurrentUser().getId());
+        loanRecord.setCreator(userService.getCurrentUser());
         loanRecord.setNotes(notes);
         return loanRecordRepository.save(loanRecord);
     }
 
-    public LoanRecord setProcess(Long id, Boolean isProcessed) {
+    public LoanRecord setPaid(Long id, Boolean paid) {
         LoanRecord loanRecord = loanRecordRepository.findById(id).orElseThrow(() -> new BizException("记录id不存在:" + id));
-        loanRecord.setIsProcessed(isProcessed);
+        loanRecord.setPaid(paid);
         return loanRecordRepository.save(loanRecord);
     }
 

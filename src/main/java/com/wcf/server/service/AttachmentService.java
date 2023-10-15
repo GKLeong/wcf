@@ -52,7 +52,7 @@ public class AttachmentService {
     private Attachment saveFile(MultipartFile file, String type, String filename, String suffix) {
         try {
             BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-            User user = userService.findMe();
+            User user = userService.getCurrentUser();
             String folder = type + new SimpleDateFormat("/yyyy/MM/dd/").format(new Date());
             String newFilename = UUID.randomUUID() + "." + suffix;
 

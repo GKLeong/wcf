@@ -23,8 +23,8 @@ public class UserController {
     }
 
     @GetMapping("me")
-    public ResultBody findMe() {
-        return ResultBody.success(userService.findMe());
+    public ResultBody getCurrentUser() {
+        return ResultBody.success(userService.getCurrentUser());
     }
 
     @PutMapping("/{id}")

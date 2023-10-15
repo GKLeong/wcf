@@ -36,15 +36,36 @@ public class LoanRecord {
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @Column(name = "is_processed")
-    private Boolean isProcessed = false;
+    @Column(name = "paid")
+    private Boolean paid = false;
+
+    @Column(name = "posted")
+    private Boolean posted = false;
+
+    @Column(name = "creator_id", nullable = false)
+    private Long creatorId;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_id", insertable = false, updatable = false)
+    private User creator;
 
     @Column(name = "notes")
     private String notes;
 
+    @Column(name = "create_time", insertable = false, updatable = false)
+    private Date createTime;
+
+    @Column(name = "update_time", insertable = false, updatable = false)
+    private Date updateTime;
+
     public String getUser() {
         if (user == null) return null;
         return user.getName();
+    }
+
+    public String getCreator() {
+        // if (creator == null) return null; 创建数据的同时也设置了creator, 所以insert数据后creator不存在null的情况, 可以直接调用
+        return creator.getName();
     }
 
 }

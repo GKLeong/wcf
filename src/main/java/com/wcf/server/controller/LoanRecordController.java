@@ -35,9 +35,9 @@ public class LoanRecordController {
     }
 
     @PutMapping("/{id}")
-    public ResultBody setProcess(@PathVariable Long id,
-                                 @RequestParam Boolean isProcessed) {
-        return ResultBody.success(loanRecordService.setProcess(id, isProcessed));
+    public ResultBody setPaid(@PathVariable Long id,
+                              @RequestParam Boolean paid) {
+        return ResultBody.success(loanRecordService.setPaid(id, paid));
     }
 
     @DeleteMapping("/{id}")

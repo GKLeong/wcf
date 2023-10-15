@@ -43,7 +43,7 @@ public class UserService {
                 .orElseThrow(() -> new BizException("用户名不存在: " + username));
     }
 
-    public User findMe() {
+    public User getCurrentUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return findByUsernameAndDeletedIsFalse(userDetails.getUsername());
     }
