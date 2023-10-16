@@ -32,6 +32,10 @@ public class SalaryConfigService {
         return salaryConfigRepository.findAllByUserId(userId);
     }
 
+    public List<SalaryConfig> findAllByUserIdInAndIsEffectiveIsTrue(List<Long> userIds) {
+        return salaryConfigRepository.findAllByUserIdInAndIsEffectiveIsTrue(userIds);
+    }
+
     public List<Object> getIndex() {
         HashMap<Object, Object> countMap = salaryConfigRepository.getCountGroupByUserId().stream()
                 .collect(HashMap::new, (map, pair) -> map.put(pair[0], pair[1]), HashMap::putAll);

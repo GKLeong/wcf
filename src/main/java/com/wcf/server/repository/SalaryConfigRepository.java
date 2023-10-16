@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -22,4 +21,6 @@ public interface SalaryConfigRepository extends JpaRepository<SalaryConfig, Long
 
     @Query("SELECT sc.userId,COUNT(sc.id) FROM SalaryConfig sc WHERE sc.isEffective = TRUE GROUP BY sc.userId")
     List<Object[]> getCountGroupByUserId();
+
+    List<SalaryConfig> findAllByUserIdInAndIsEffectiveIsTrue(List<Long> userIds);
 }
