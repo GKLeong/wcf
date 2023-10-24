@@ -43,4 +43,9 @@ public class AuthController {
         userService.addFirstAdmin();
         return ResultBody.success();
     }
+
+    @DeleteMapping("/logout")
+    public ResultBody logout() {
+        return ResultBody.success();
+    }
 }
