@@ -5,6 +5,7 @@ import com.wcf.server.model.User;
 import com.wcf.server.repository.SalaryConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -53,6 +54,7 @@ public class SalaryConfigService {
         return allData;
     }
 
+    @Transactional
     public SalaryConfig add(Long userId, String name, String salaryType, Integer cycle, String cycleUnit, BigDecimal amount, Boolean isDailyConversion, Boolean isRealTime, Date effectiveDate, String notes) {
         SalaryConfig salaryConfig = new SalaryConfig();
         User user = userService.findByIdAndDeletedIsFalse(userId);
