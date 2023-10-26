@@ -37,6 +37,18 @@ public class SalaryConfigService {
         return salaryConfigRepository.findAllByUserIdInAndIsEffectiveIsTrue(userIds);
     }
 
+    public List<SalaryConfig> findAllByNameAndIsEffectiveIsTrue(String name) {
+        return salaryConfigRepository.findAllByNameAndIsEffectiveIsTrue(name);
+    }
+
+    public HashMap<Long, SalaryConfig> findAllGuaranteedSalaryByIsEffectiveIsTrue() {
+        return findAllByNameAndIsEffectiveIsTrue("保底工资").stream()
+                .collect(HashMap::new,
+                        (map, data) -> map.put(data.getUserId(), data),
+                        HashMap::putAll
+                );
+    }
+
     public List<Object> getIndex() {
         HashMap<Object, Object> countMap = salaryConfigRepository.getCountGroupByUserId().stream()
                 .collect(HashMap::new, (map, pair) -> map.put(pair[0], pair[1]), HashMap::putAll);

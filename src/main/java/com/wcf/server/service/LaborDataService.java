@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static com.wcf.server.utils.DateUtils.getNextMonthFirstDay;
 
 @Service
 public class LaborDataService {
@@ -45,6 +45,14 @@ public class LaborDataService {
 
     public List<LaborData> findAll() {
         return laborDataRepository.findAll();
+    }
+
+    public BigDecimal sumByUserIdAndBillDate(Long userId, Date billDate) {
+        Date nextMonthFirstDay = getNextMonthFirstDay(billDate);
+        BigDecimal amount = laborDataRepository.sumAmountByUserIdAndDate(userId, billDate, nextMonthFirstDay);
+        if (amount == null) amount = new BigDecimal(0);
+
+        return amount;
     }
 
     public void uploadExcel(MultipartFile file) throws IOException {

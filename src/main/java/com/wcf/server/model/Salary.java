@@ -72,4 +72,8 @@ public class Salary {
     public String getUser() {
         return user.getName();
     }
+
+    public User getUserEntity() {
+        return user;
+    }
 }

@@ -14,4 +14,6 @@ public interface SalarySummaryRepository extends JpaRepository<SalarySummary, Lo
     List<SalarySummary> findAllByUserId(Long userId);
 
     List<SalarySummary> findAllByBillDateAndUserId(Date billDate, Long userId);
+
+    void deleteAllByBillDateAndOperatorIdAndOperator(Date billDate, Long operatorId, String operator);
 }

@@ -38,6 +38,11 @@ public class UserService {
                 .orElseThrow(() -> new BizException("用户id不存在: " + id));
     }
 
+    public User findByNameAndDeletedIsFalse(String name) {
+        return userRepository.findByNameAndDeletedIsFalse(name)
+                .orElseThrow(() -> new BizException("员工不存在: " + name));
+    }
+
     public User findByUsernameAndDeletedIsFalse(String username) {
         return userRepository.findByUsernameAndDeletedIsFalse(username)
                 .orElseThrow(() -> new BizException("用户名不存在: " + username));

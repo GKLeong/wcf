@@ -69,4 +69,8 @@ public class SalarySummary {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
+
+    public String getUser() {
+        return user.getName();
+    }
 }

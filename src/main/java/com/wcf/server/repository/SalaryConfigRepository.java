@@ -23,4 +23,6 @@ public interface SalaryConfigRepository extends JpaRepository<SalaryConfig, Long
     List<Object[]> getCountGroupByUserId();
 
     List<SalaryConfig> findAllByUserIdInAndIsEffectiveIsTrue(List<Long> userIds);
+
+    List<SalaryConfig> findAllByNameAndIsEffectiveIsTrue(String name);
 }
