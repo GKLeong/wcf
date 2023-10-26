@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface SalarySummaryRepository extends JpaRepository<SalarySummary, Long> {
     List<SalarySummary> findAllByBillDate(Date billDate);
+
+    List<SalarySummary> findAllByUserId(Long userId);
+
+    List<SalarySummary> findAllByBillDateAndUserId(Date billDate, Long userId);
 }
