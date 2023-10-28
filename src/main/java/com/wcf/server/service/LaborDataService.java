@@ -112,6 +112,7 @@ public class LaborDataService {
     public LaborData update(Long id,
                             Long orderId,
                             Long productId,
+                            String productName,
                             Date date,
                             Long laborCostId,
                             BigDecimal quantity,
@@ -125,7 +126,7 @@ public class LaborDataService {
         // 需要修改为从实例获取
         laborData.setOrderId(orderId);
         laborData.setProductId(productId);
-        laborData.setProductName(null);
+        laborData.setProductName(productName);
 
         laborData.setDate(date);
 

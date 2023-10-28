@@ -41,6 +41,7 @@ public class LaborDataController {
     public ResultBody update(@PathVariable Long id,
                              @RequestParam(value = "orderId", required = false) Long orderId,
                              @RequestParam(value = "productId", required = false) Long productId,
+                             @RequestParam String productName,
                              @RequestParam String date,
                              @RequestParam Long laborCostId,
                              @RequestParam BigDecimal quantity,
@@ -49,6 +50,6 @@ public class LaborDataController {
                              @RequestParam Long userId,
                              @RequestParam(value = "cardGroup", required = false) String cardGroup,
                              @RequestParam(value = "cardNumber", required = false) String cardNumber) {
-        return ResultBody.success(laborDataService.update(id, orderId, productId, dateFormat(date), laborCostId, quantity, frequency, notes, userId, cardGroup, cardNumber));
+        return ResultBody.success(laborDataService.update(id, orderId, productId, productName, dateFormat(date), laborCostId, quantity, frequency, notes, userId, cardGroup, cardNumber));
     }
 }
