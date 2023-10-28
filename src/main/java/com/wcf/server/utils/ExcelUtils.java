@@ -27,8 +27,8 @@ public class ExcelUtils {
         this.value = value;
     }
 
-    private void setBlank(Boolean blank) {
-        this.blank = blank;
+    private void setBlank() {
+        this.blank = true;
     }
 
     public Date getDate() {
@@ -44,10 +44,10 @@ public class ExcelUtils {
         return this.value;
     }
 
-    /* excel 的整数值作为字符串读取的时候会变成x.0这样的格式, 这个方法避免出现这个情况 */
+    /* excel 的整数值作为字符串读取的时候会变成x.0这样的格式, 用这个方法会自动移除末尾的.0 */
     public String getIntegerString() {
         if (isBlank()) return null;
-        return getInteger().toString();
+        return this.value.replaceAll(".0+$", "");
     }
 
     public Integer getInteger() {
@@ -109,14 +109,14 @@ public class ExcelUtils {
 
                 // 特殊单元格处理 - 空单元格
                 if (cell == null) {
-                    excelUtils.setBlank(true);
+                    excelUtils.setBlank();
                     data.put(titleList.get(curCol), excelUtils);
                     continue;
                 }
 
                 CellType cellType = cell.getCellType();
                 if (cellType == CellType._NONE || cellType == CellType.BLANK) {
-                    excelUtils.setBlank(true);
+                    excelUtils.setBlank();
                 } else if (cellType == CellType.NUMERIC) {
                     // 特殊单元格处理 - 日期
                     if (DateUtil.isCellDateFormatted(cell)) {

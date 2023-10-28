@@ -84,7 +84,7 @@ public class LaborDataService {
             data = new LaborData();
             // orderId
             // productId
-            data.setProductName(excelData.get("产品").getString());
+            data.setProductName(excelData.get("产品").getIntegerString());
             data.setDate(excelData.get("日期").getDate());
             data.setDepartmentId(departmentMap.get(excelData.get("部门").getString()));
             data.setAction(excelData.get("动作").getString());
