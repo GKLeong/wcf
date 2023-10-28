@@ -1,5 +1,6 @@
 package com.wcf.server.service;
 
+import com.wcf.server.base.response.BizException;
 import com.wcf.server.model.Department;
 import com.wcf.server.model.LaborCost;
 import com.wcf.server.model.LaborData;
@@ -45,6 +46,10 @@ public class LaborDataService {
 
     public List<LaborData> findAll() {
         return laborDataRepository.findAll();
+    }
+
+    public LaborData findById(Long id) {
+        return laborDataRepository.findById(id).orElseThrow(() -> new BizException("数据 id 不存在: " + id));
     }
 
     public BigDecimal sumByUserIdAndBillDate(Long userId, Date billDate) {
@@ -102,5 +107,48 @@ public class LaborDataService {
         }
 
         laborDataRepository.saveAll(dataList);
+    }
+
+    public LaborData update(Long id,
+                            Long orderId,
+                            Long productId,
+                            Date date,
+                            Long laborCostId,
+                            BigDecimal quantity,
+                            BigDecimal frequency,
+                            String notes,
+                            Long userId,
+                            String cardGroup,
+                            String cardNumber) {
+        LaborData laborData = findById(id);
+
+        // 需要修改为从实例获取
+        laborData.setOrderId(orderId);
+        laborData.setProductId(productId);
+        laborData.setProductName(null);
+
+        laborData.setDate(date);
+
+        LaborCost laborCost = laborCostService.findById(laborCostId);
+        laborData.setLaborCostId(laborCost.getId());
+
+        Department department = departmentService.findById(laborCost.getDepartmentId());
+        laborData.setDepartmentId(department.getId());
+        laborData.setDepartment(department);
+
+        laborData.setAction(laborCost.getAction());
+        laborData.setQuantity(quantity);
+        laborData.setFrequency(frequency);
+        laborData.setUnitPrice(laborCost.getPrice());
+        laborData.setAmount(laborData.getQuantity().multiply(laborData.getFrequency().multiply(laborData.getUnitPrice())));
+        laborData.setNotes(notes);
+
+        User labor = userService.findByIdAndDeletedIsFalse(userId);
+        laborData.setUserId(labor.getId());
+        laborData.setProducer(labor.getName());
+
+        laborData.setCardGroup(cardGroup);
+        laborData.setCardNumber(cardNumber);
+        return laborDataRepository.save(laborData);
     }
 }
