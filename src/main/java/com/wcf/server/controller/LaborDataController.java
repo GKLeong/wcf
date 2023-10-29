@@ -52,4 +52,9 @@ public class LaborDataController {
                              @RequestParam(value = "cardNumber", required = false) String cardNumber) {
         return ResultBody.success(laborDataService.update(id, orderId, productId, productName, dateFormat(date), laborCostId, quantity, frequency, notes, userId, cardGroup, cardNumber));
     }
+
+    @GetMapping("/export")
+    public ResultBody exportToExcel() throws IOException {
+        return ResultBody.success(laborDataService.exportToExcel());
+    }
 }

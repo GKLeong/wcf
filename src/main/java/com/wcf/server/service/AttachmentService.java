@@ -5,6 +5,7 @@ import com.wcf.server.base.response.CommonEnum;
 import com.wcf.server.model.Attachment;
 import com.wcf.server.model.User;
 import com.wcf.server.repository.AttachmentRepository;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -43,7 +46,7 @@ public class AttachmentService {
 
     public Attachment addExcel(MultipartFile file) {
         String filename = file.getOriginalFilename();
-        Set<String> allowSuffix = new HashSet<>(Arrays.asList("xlsx","xls"));
+        Set<String> allowSuffix = new HashSet<>(Arrays.asList("xlsx", "xls"));
         String suffix = checkAndGetSuffix(filename, allowSuffix);
 
         return saveFile(file, "excel", filename, suffix);
@@ -99,5 +102,13 @@ public class AttachmentService {
         }
 
         return suffix;
+    }
+
+    public String saveExcelFile(Workbook workbook, String fileName) throws IOException {
+        try (FileOutputStream fileOut = new FileOutputStream(attachmentPath + fileName)) {
+            workbook.write(fileOut);
+        }
+
+        return attachmentUrl + fileName;
     }
 }

@@ -1,6 +1,7 @@
 package com.wcf.server.utils;
 
 import com.wcf.server.base.response.BizException;
+import com.wcf.server.dto.ExcelHeadDTO;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -137,5 +138,36 @@ public class ExcelUtils {
 
         workbook.close();
         return dataList;
+    }
+
+    public static Workbook exportDataToExcel(List<ExcelHeadDTO> excelHeadList, List<?> data) {
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Data");
+
+        // 创建标题行
+        Row headerRow = sheet.createRow(0);
+        for (int i = 0; i < excelHeadList.size(); i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(excelHeadList.get(i).getTitle());
+        }
+
+        // 填充数据行
+        int rowNum = 1;
+        for (Object entity : data) {
+            Row row = sheet.createRow(rowNum++);
+            populateRow(row, excelHeadList, entity);
+        }
+
+        return workbook;
+    }
+
+    private static void populateRow(Row row, List<ExcelHeadDTO> excelHeadDTOList, Object entity) {
+        // 这里假设实体类的属性都是String类型，你可能需要根据实际情况进行转换
+        for (int i = 0; i < excelHeadDTOList.size(); i++) {
+            Cell cell = row.createCell(i);
+            // 使用反射获取属性值
+            String propertyValue = ObjectUtils.getPropertyValue(entity, excelHeadDTOList.get(i).getProperty());
+            cell.setCellValue(propertyValue);
+        }
     }
 }

@@ -1,12 +1,14 @@
 package com.wcf.server.service;
 
 import com.wcf.server.base.response.BizException;
+import com.wcf.server.dto.ExcelHeadDTO;
 import com.wcf.server.model.Department;
 import com.wcf.server.model.LaborCost;
 import com.wcf.server.model.LaborData;
 import com.wcf.server.model.User;
 import com.wcf.server.repository.LaborDataRepository;
 import com.wcf.server.utils.ExcelUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -151,5 +153,27 @@ public class LaborDataService {
         laborData.setCardGroup(cardGroup);
         laborData.setCardNumber(cardNumber);
         return laborDataRepository.save(laborData);
+    }
+
+    public String exportToExcel() throws IOException {
+        List<LaborData> laborDataList = findByArchiveDateIsNull();
+        List<ExcelHeadDTO> excelHeadDTOList = new ArrayList<>();
+        excelHeadDTOList.add(new ExcelHeadDTO("cardGroup", "卡片"));
+        excelHeadDTOList.add(new ExcelHeadDTO("cardNumber", "编号"));
+        excelHeadDTOList.add(new ExcelHeadDTO("productName", "产品"));
+        excelHeadDTOList.add(new ExcelHeadDTO("date", "日期"));
+        excelHeadDTOList.add(new ExcelHeadDTO("department", "部门"));
+        excelHeadDTOList.add(new ExcelHeadDTO("action", "动作"));
+        excelHeadDTOList.add(new ExcelHeadDTO("quantity", "数量"));
+        excelHeadDTOList.add(new ExcelHeadDTO("frequency", "步骤"));
+        excelHeadDTOList.add(new ExcelHeadDTO("unitPrice", "单价"));
+        excelHeadDTOList.add(new ExcelHeadDTO("amount", "金额"));
+        excelHeadDTOList.add(new ExcelHeadDTO("producer", "生产者"));
+        excelHeadDTOList.add(new ExcelHeadDTO("notes", "备注"));
+
+        Workbook workbook = ExcelUtils.exportDataToExcel(excelHeadDTOList, laborDataList);
+        String url = attachmentService.saveExcelFile(workbook, "export.xlsx");
+        workbook.close();
+        return url;
     }
 }
