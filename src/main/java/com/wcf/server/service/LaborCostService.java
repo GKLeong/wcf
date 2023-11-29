@@ -34,7 +34,7 @@ public class LaborCostService {
     }
 
     public LaborCost findById(Long id) {
-        return laborCostRepository.findById(id).orElseThrow(() -> new BizException("供价数据 id 不存在: " + id));
+        return laborCostRepository.findById(id).orElseThrow(() -> new BizException("工价数据 id 不存在: " + id));
     }
 
     public List<LaborCost> findOld() {
